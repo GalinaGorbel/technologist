@@ -5,12 +5,7 @@
 <script>
 export default {
   mounted() {
-    //this.$store.dispatch('request/checkPosts');
-this.$store.dispatch('request/loadExperience');
-/*     if (!this.$store.getters['request/checkPosts']) {
-
-      this.$store.dispatch('request/loadExperience');
-    }  */
+    this.$store.dispatch('request/loadExperience');
   },
 };
 </script>
