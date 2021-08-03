@@ -12,36 +12,31 @@ export default {
         setRequests(state, payload) {
             state.requests = payload;
         },
-        addCheckPosts(state, payload) {
-            state.checkPosts = payload
+        addLike(state, payload) {
+            const cardId = payload.id;
+            const card = state.requests.find(item => item.id === cardId);
+            payload.liked ? card.like++ : card.like--;
+            card.isLiked = payload.liked;
         }
     },
     actions: {
         async loadExperience(context) {
             try {
-                const res = await axios.get('http://localhost:3000/posts');
-                context.commit('setRequests', res.data)
+                const response = await axios.get('http://localhost:3000/posts');
+                context.commit('setRequests', response.data)
             } catch (e) {
                 console.error(e);
             }
         },
-        checkPosts(context) {
-            const arr = localStorage.getItem('posts');
-            if (arr) {
-                context.commit('setRequests', JSON.parse(arr))
-                context.commit('addCheckPosts', true);
+        async saveChanges(context, payload) {
+            try {
+                const cardId = payload.id;
+                const requests = context.rootGetters['request/requests'];
+                const card = requests.find(item => item.id === cardId);
+                await axios.patch(`http://localhost:3000/posts/` + cardId, { ...card });
+            } catch (e) {
+                console.error(e);
             }
-        },
-        addLike(context, payload) {
-            const cardId = payload.id;
-            const requests = context.rootGetters['request/requests'];
-            const card = requests.find(item => item.id === cardId);
-            payload.liked ? card.like++ : card.like--;
-            card.isLiked = payload.liked;
-
-            localStorage.setItem('posts', JSON.stringify(requests));
-            context.commit('setRequests', requests);
-            context.commit('addCheckPosts', true);
         }
     },
     getters: {

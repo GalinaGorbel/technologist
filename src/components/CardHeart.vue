@@ -15,9 +15,13 @@ export default {
   methods: {
     addLike() {
       this.isLiked ? (this.isLiked = false) : (this.isLiked = true);
-      this.$store.dispatch('request/addLike', { id: +this.id, liked: this.isLiked });
+      this.$store.commit('request/addLike', {
+        id: +this.id,
+        liked: this.isLiked,
+      });
+      this.$store.dispatch('request/saveChanges', { id: +this.id });
     },
-  }
+  },
 };
 </script>
 

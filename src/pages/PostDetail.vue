@@ -2,14 +2,15 @@
   <base-wrap class="baseWrap_detail">
     <article class="card card_detail">
       <div class="card__img">
-        <img src="../../public/assets/img/big.jpg" :alt="title" /> <!-- в целях экономии времени вставила прямую ссылку -->
+        <img src="../../public/assets/img/big.jpg" :alt="title" />
+        <!-- в целях экономии времени вставила прямую ссылку -->
       </div>
       <div class="card__content">
         <span class="card__date">{{ date }}</span>
         <h3 class="card__title">{{ title }}</h3>
-        <p>{{detail}}</p>
+        <p>{{ detail }}</p>
         <div class="card__like">
-          <card-heart :id="id" :liked="isLiked"></card-heart>
+          <card-heart :id="id" :liked="isLiked" :idx="index"></card-heart>
           <span>{{ like }}</span>
         </div>
         <hr />
@@ -27,6 +28,7 @@ export default {
     return {
       selectedPost: null,
       isLiked: null,
+      index: null,
     };
   },
   computed: {

@@ -4,13 +4,13 @@
 
 <script>
 export default {
-  created() {
-    this.$store.dispatch('request/checkPosts');
-
-    if (!this.$store.getters['request/checkPosts']) {
+  mounted() {
+    //this.$store.dispatch('request/checkPosts');
+this.$store.dispatch('request/loadExperience');
+/*     if (!this.$store.getters['request/checkPosts']) {
 
       this.$store.dispatch('request/loadExperience');
-    } 
+    }  */
   },
 };
 </script>

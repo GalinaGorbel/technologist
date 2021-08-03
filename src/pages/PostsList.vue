@@ -21,8 +21,8 @@ export default {
   computed: {
     posts() {
       return this.$store.getters['request/requests'];
-    }
-  }
+    },
+  },
 };
 </script>
 
