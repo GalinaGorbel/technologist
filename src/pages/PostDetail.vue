@@ -1,17 +1,17 @@
 <template>
-  <base-wrap class="baseWrap_detail">
+  <base-wrap class="baseWrap_detail" v-if="post">
     <article class="card card_detail">
       <div class="card__img">
-        <img src="../../public/assets/img/big.jpg" :alt="title" />
+        <img src="../../public/assets/img/big.jpg" alt="picture" />
         <!-- в целях экономии времени вставила прямую ссылку -->
       </div>
       <div class="card__content">
-        <span class="card__date">{{ date }}</span>
-        <h3 class="card__title">{{ title }}</h3>
-        <p>{{ detail }}</p>
+        <span class="card__date">{{ post.date }}</span>
+        <h3 class="card__title">{{ post.name }}</h3>
+        <p>{{ post.detail_text }}</p>
         <div class="card__like">
-          <card-heart :id="id" :liked="isLiked" :idx="index"></card-heart>
-          <span>{{ like }}</span>
+          <card-heart :id="id" :liked="post.isLiked"></card-heart>
+          <span>{{ post.like }}</span>
         </div>
         <hr />
         <base-tag class="tag_detail"></base-tag>
@@ -24,32 +24,12 @@
 <script>
 export default {
   props: ['id'],
-  data() {
-    return {
-      selectedPost: null,
-      isLiked: null,
-      index: null,
-    };
-  },
   computed: {
-    title() {
-      return this.selectedPost.name;
+    post() {
+      return this.$store.getters['request/requests'].find(
+        (item) => item.id == this.id
+      );
     },
-    date() {
-      return this.selectedPost.date;
-    },
-    like() {
-      return this.selectedPost.like;
-    },
-    detail() {
-      return this.selectedPost.detail_text;
-    },
-  },
-  created() {
-    this.selectedPost = this.$store.getters['request/requests'].find(
-      (item) => item.id == this.id
-    );
-    this.isLiked = this.selectedPost.isLiked;
   },
 };
 </script>
